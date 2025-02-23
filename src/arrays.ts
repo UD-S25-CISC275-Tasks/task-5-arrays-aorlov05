@@ -100,7 +100,7 @@ export function makeMath(addends: number[]): string {
             "",
         )
         .substring(1);
-    // If there were no values concatenated, then return 0=0, otherwise return math expression.
+    // If there were no values concatenated, then return 0=0, otherwise return math expression
     return `${sum}=${additionExpression.length > 0 ? additionExpression : 0}`;
 }
 
@@ -114,5 +114,29 @@ export function makeMath(addends: number[]): string {
  * And the array [1, 9, 7] would become [1, 9, 7, 17]
  */
 export function injectPositive(values: number[]): number[] {
-    return [];
+    // Checks if there's a negative number in the array and returns it's index
+    const findNegativeIndex: number = values.findIndex(
+        (value: number) => value < 0,
+    );
+    if (findNegativeIndex === -1) {
+        // If there are no negative numbers, push the sum of all array elements to the end
+        const sum: number = values.reduce(
+            (currentTotal: number, num: number) => currentTotal + num,
+            0,
+        );
+        return [...values, sum];
+    } else {
+        // Get sum of all elements before first negative element
+        const sumBeforeNegative: number = values.reduce(
+            (currentTotal: number, num: number, currentIndex: number) =>
+                currentIndex >= findNegativeIndex ? currentTotal : (
+                    currentTotal + num
+                ),
+            0,
+        );
+        // Inserts the sum of elements before the negative element after itself
+        const valuesCopy: number[] = [...values];
+        valuesCopy.splice(findNegativeIndex + 1, 0, sumBeforeNegative);
+        return valuesCopy;
+    }
 }
