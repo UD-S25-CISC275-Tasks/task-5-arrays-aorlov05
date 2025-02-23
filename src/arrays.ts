@@ -17,7 +17,8 @@ export function bookEndList(numbers: number[]): number[] {
  * number has been tripled (multiplied by 3).
  */
 export function tripleNumbers(numbers: number[]): number[] {
-    return [];
+    return numbers.map((value: number): number => value * 3);
+}
 
 /**
  * Consume an array of strings and convert them to integers. If
