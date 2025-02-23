@@ -87,7 +87,21 @@ export function allRGB(colors: string[]): boolean {
  * And the array [] would become "0=0".
  */
 export function makeMath(addends: number[]): string {
-    return "";
+    // Get sum of all elements in addends array
+    const sum: number = addends.reduce(
+        (currentTotal: number, num: number) => currentTotal + num,
+        0,
+    );
+    // Concatenate every value in array with + in front, then removes the first plus
+    const additionExpression: string = addends
+        .reduce(
+            (previousValue: string, currentValue: number) =>
+                previousValue + "+" + currentValue.toString(),
+            "",
+        )
+        .substring(1);
+    // If there were no values concatenated, then return 0=0, otherwise return math expression.
+    return `${sum}=${additionExpression.length > 0 ? additionExpression : 0}`;
 }
 
 /**
